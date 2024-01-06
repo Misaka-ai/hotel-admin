@@ -5,7 +5,7 @@
   <title>酒店管理</title>
   <link href="./css/main.css" rel="stylesheet">
   <!-- 引入样式 -->
-  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <link rel="stylesheet" href="./css/element-ui.css">
 
 
 </head>
@@ -16,15 +16,15 @@
     <el-button type="primary" size="small" @click="beginAdd">新增酒店</el-button>
   </div>
   <el-table
-      :data="hotels"
-      border
-      style="width: 100%">
+          :data="hotels"
+          border
+          style="width: 100%">
     <el-table-column
-        v-for="h in headers" :key="h.prop"
-        :prop="h.prop"
-        :label="h.text"
-        :width="h.width"
-        :align="h.align"
+            v-for="h in headers" :key="h.prop"
+            :prop="h.prop"
+            :label="h.text"
+            :width="h.width"
+            :align="h.align"
     >
     </el-table-column>
     <el-table-column align="center" label="操作" :width="150">
@@ -37,12 +37,12 @@
     </el-table-column>
   </el-table>
   <el-pagination
-      @current-change="query"
-      style="margin-top: 5px"
-      background
-      :page-size="5"
-      layout="prev, pager, next"
-      :total="total">
+          @current-change="query"
+          style="margin-top: 5px"
+          background
+          :page-size="5"
+          layout="prev, pager, next"
+          :total="total">
   </el-pagination>
   <el-dialog title="酒店信息" :visible.sync="formVisible" width="30%" style="padding: 0 20px;">
     <el-form :model="hotel" size="small" label-position="left" :label-width="formLabelWidth">
@@ -100,7 +100,7 @@
 <script src="./js/vue.js"></script>
 <script src="./js/axios.min.js"></script>
 <!-- 引入组件库 -->
-<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="./js/element-ui.js"></script>
 <script>
   // 设置后台服务地址
   axios.defaults.baseURL = "http://localhost:8099";
@@ -136,15 +136,15 @@
       query(page){
         this.lastPage = page;
         axios.get("/hotel/list", {
-            params: {
-              page: page, size: 5
-            }
-          })
-          .then(resp => {
-            this.hotels = resp.data.hotels;
-            this.total = resp.data.total;
-          })
-          .catch(err => console.log(err));
+          params: {
+            page: page, size: 5
+          }
+        })
+                .then(resp => {
+                  this.hotels = resp.data.hotels;
+                  this.total = resp.data.total;
+                })
+                .catch(err => console.log(err));
       },
       handleEdit(v1, v2) {
         this.isEdit = true;
@@ -168,57 +168,57 @@
       confirmEdit(){
         if(this.isEdit){
           axios.put("/hotel", this.hotel)
-            .then(resp => {
-              this.$message({
-                message: '更新成功',
-                type: 'success'
-              });
-              this.formVisible = false;
-              this.reload();
-            })
-            .catch(err => {
-              this.$message({
-                message: '更新失败',
-                type: 'error'
-              });
-              console.log(err);
-            })
+                  .then(resp => {
+                    this.$message({
+                      message: '更新成功',
+                      type: 'success'
+                    });
+                    this.formVisible = false;
+                    this.reload();
+                  })
+                  .catch(err => {
+                    this.$message({
+                      message: '更新失败',
+                      type: 'error'
+                    });
+                    console.log(err);
+                  })
         }else{
           axios.post("/hotel", this.hotel)
-            .then(resp => {
-              this.$message({
-                message: '新增成功',
-                type: 'success'
-              });
-              this.formVisible = false;
-              this.reload();
-            })
-            .catch(err => {
-              this.$message({
-                message: '新增失败',
-                type: 'error'
-              });
-              console.log(err);
-            })
+                  .then(resp => {
+                    this.$message({
+                      message: '新增成功',
+                      type: 'success'
+                    });
+                    this.formVisible = false;
+                    this.reload();
+                  })
+                  .catch(err => {
+                    this.$message({
+                      message: '新增失败',
+                      type: 'error'
+                    });
+                    console.log(err);
+                  })
         }
 
       },
       deleteById(id){
         axios.delete("/hotel/" + id)
-        .then(() => {
-          this.$message({
-            type: 'success',
-            message: '删除成功!'
-          });
-          this.reload();
-        })
-        .catch(err => {
-          this.$message({
-            type: 'error',
-            message: '删除失败!'
-          });
-          console.log(err);
-        })
+                .then(() => {
+                  this.$message({
+                    type: 'success',
+                    message: '删除成功!'
+                  });
+                  this.reload();
+                })
+                .catch(err => {
+                  this.$message({
+                    type: 'error',
+                    message: '删除失败!'
+                  });
+                  console.log(err);
+                })
       },
       reload(){
         this.query(this.lastPage);
